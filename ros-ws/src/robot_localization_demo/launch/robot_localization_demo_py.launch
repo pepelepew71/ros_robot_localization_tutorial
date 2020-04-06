@@ -1,0 +1,8 @@
+<launch>
+
+  <!-- visualization node to show the real turtle, the measurements and the estimated position -->
+  <node pkg="turtlesim" type="turtlesim_node" name="turtlesim" />
+  <!-- keyboard control for the real turtle -->
+  <node pkg="turtlesim" type="turtle_teleop_key" name="teleop" output="screen" />
+
+</launch>
