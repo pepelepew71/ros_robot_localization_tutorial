@@ -58,7 +58,7 @@ class OdomNode():
         self.turtle1_pose = res
 
     def spin(self):
-        rate = rospy.Rate(hz=self.args.frequency)
+        rate = rospy.Rate(hz=self.args.frequency)  # dont need ros::spinOnce()
         frame_sequence = 0
         while not rospy.is_shutdown():
             vx = self.turtle1_pose.linear_velocity
@@ -66,7 +66,7 @@ class OdomNode():
             vx *= (1.0 + random.gauss(mu=self.args.error_vx_systematic, sigma=self.args.error_vx_random))
             wz += vx*random.gauss(mu=self.args.error_wz_systematic, sigma=self.args.error_wz_random)
             current_twist = TwistWithCovarianceStamped()
-            current_twist.header.seq = current_twist
+            current_twist.header.seq = frame_sequence
             current_twist.header.stamp = rospy.Time.now()
             current_twist.header.frame_id = 'base_link'
             current_twist.twist.twist.linear.x = vx

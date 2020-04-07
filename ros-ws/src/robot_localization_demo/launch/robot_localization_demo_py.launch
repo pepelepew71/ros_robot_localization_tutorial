@@ -5,6 +5,9 @@
   <!-- keyboard control for the real turtle -->
   <node pkg="turtlesim" type="turtle_teleop_key" name="teleop" output="screen" />
 
+  <!-- 'turtle positioning system', transforming the position of the real turtle to a noisy measurement at a given frequency -->
+  <node pkg="robot_localization_demo" type="positioning_node.py" name="turtle1_positioning_node"
+        args="-f 1. -x 0.2 -y 0.2 -t 0.2 -v" output="screen" />
   <!-- 'turtle odometry node', transforming the movements of the real turtle to a noisy measurement at a given frequency -->
   <node pkg="robot_localization_demo" type="odometry_node.py" name="turtle1_odometry_node"
         args="-f 20. -x 0.05 -X 0. -t 0. -T 0.02 -v" output="screen" />
