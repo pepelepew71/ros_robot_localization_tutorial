@@ -12,4 +12,47 @@
   <node pkg="robot_localization_demo" type="odometry_node.py" name="turtle1_odometry_node"
         args="-f 20. -x 0.05 -X 0. -t 0. -T 0.02 -v" output="screen" />
 
+  <!-- robot_localization EKF node for the odom frame -->
+  <node pkg="robot_localization" type="ekf_localization_node" name="robot_localization_ekf_node_odom" clear_params="true">
+    <param name="frequency" value="10." />
+    <param name="sensor_timeout" value="0.2" />
+    <param name="two_d_mode" value="true" />
+    <param name="publish_tf" value="true" />
+    <param name="map_frame" value="map" />
+    <param name="odom_frame" value="odom" />
+    <param name="base_link_frame" value="base_link" />
+    <param name="world_frame" value="odom" />
+    <param name="print_diagnostics" value="true" />
+    <remap from="odometry/filtered" to="odometry/filtered_twist" />
+    <param name="twist0" value="turtle1/sensors/twist" />
+    <param name="twist0_differential" value="false"/>
+    <rosparam param="twist0_config">[false, false, false, false, false, false,
+                                     true, true, false, false, false, true,
+                                     false, false, false]</rosparam>
+  </node>
+
+  <!-- robot_localization EKF node for the map frame -->
+  <node pkg="robot_localization" type="ekf_localization_node" name="robot_localization_ekf_node_map"  clear_params="true">
+    <param name="frequency" value="10" />
+    <param name="sensor_timeout" value="0.2" />
+    <param name="two_d_mode" value="true" />
+    <param name="publish_tf" value="true" />
+    <param name="map_frame" value="map" />
+    <param name="odom_frame" value="odom" />
+    <param name="base_link_frame" value="base_link" />
+    <param name="world_frame" value="map" />
+    <param name="twist0" value="turtle1/sensors/twist" />
+    <rosparam param="twist0_config">[false, false, false, false, false, false,
+                                     true, true, false, false, false, true,
+                                     false, false, false]</rosparam>
+    <param name="pose0" value="turtle1/sensors/pose" />
+    <rosparam param="pose0_config">[true, true, false, false, false, true,
+                                    false, false, false, false, false, false,
+                                    false, false, false]</rosparam>
+    <remap from="odometry/filtered" to="odometry/filtered_map"/>
+  </node>
+
+  <!-- use rviz to visualize the tf which is the estimated position of the turtle in the map frame -->
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find robot_localization_demo)/rviz/rviz.rviz" />
+
 </launch>

@@ -28,7 +28,7 @@ class PositionNode():
 
         rospy.Subscriber(name="/turtle1/pose", data_class=Pose, callback=self._callback, queue_size=16)  # 62.5 Hz
         self.spawn_once()
-        self.publisher = rospy.Publisher(name='/turtle1/sensor/pose', data_class=PoseWithCovarianceStamped, queue_size=16)
+        self.publisher = rospy.Publisher(name='/turtle1/sensors/pose', data_class=PoseWithCovarianceStamped, queue_size=16)
 
         self.spin()
 

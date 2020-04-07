@@ -27,7 +27,7 @@ class OdomNode():
 
         rospy.Subscriber(name="/turtle1/pose", data_class=Pose, callback=self._callback, queue_size=16)  # 62.5 Hz
         self.spawn_once()
-        self.publisher = rospy.Publisher(name='/turtle1/sensor/twist', data_class=TwistWithCovarianceStamped, queue_size=16)
+        self.publisher = rospy.Publisher(name='/turtle1/sensors/twist', data_class=TwistWithCovarianceStamped, queue_size=16)
 
         self.spin()
 
